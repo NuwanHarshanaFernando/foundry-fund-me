@@ -221,6 +221,14 @@ $ forge test
 
 It runs much faster because there is no API calls
 
+## Cheatcodes
+
+https://getfoundry.sh/forge/tests/cheatcodes/
+
+https://getfoundry.sh/reference/cheatcodes/assertions
+
+
+
 
 
 
