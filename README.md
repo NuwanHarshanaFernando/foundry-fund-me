@@ -206,6 +206,21 @@ $ forge test --fork-url $MAINNET_RPC_URL
 
 ```
 
+# Mock 
+Create a folder called mocks inside test folder
+
+
+Get the MockV3Aggregator from the github repo
+
+Now run command
+
+```shell
+$ forge test 
+
+```
+
+It runs much faster because there is no API calls
+
 
 
 
