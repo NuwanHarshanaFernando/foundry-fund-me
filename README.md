@@ -239,6 +239,18 @@ It creates a file called .gas-snapshot
 In anvil chain, it costs zero gas price, But in other networks there is a gas price.
 We have a cheatcode for gas price called 'txGasPrice'
 
+```shell
+$ forge snapshot -m testWithdrawWithASingleFunder
+
+```
+
+## Storage
+
+```shell
+$ forge inspect FundMe storageLayout
+
+```
+
 
 
 
