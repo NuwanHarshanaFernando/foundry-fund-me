@@ -4,6 +4,7 @@ pragma solidity ^0.8.18;
 
 import {Test, console} from "forge-std/Test.sol";
 import {FundMe} from "../src/FundMe.sol";
+import {DeployFundMe} from "../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test {
     FundMe fundMe;
@@ -11,7 +12,10 @@ contract FundMeTest is Test {
     function setUp() external {
         // FundMe fundMe = new FundMe(); // fundMe variable of type FundMe is a new FundMe contract
         // us -> FundMeTest -> FundMe -> The reason for the error of testOwnerIsMsgSender
-        fundMe = new FundMe();
+
+        // fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        DeployFundMe deployFundMe = new DeployFundMe();
+        fundMe = deployFundMe.run(); // run returns a FundMe contract
     }
 
     function testMinimumDollarIsFive() public {
@@ -22,7 +26,7 @@ contract FundMeTest is Test {
         console.log(fundMe.i_owner());
         console.log(msg.sender);
         //  assertEq(fundMe.i_owner(), msg.sender); // Fails because of (us -> FundMeTest -> FundMe)
-        assertEq(fundMe.i_owner(), address(this)); // Now test pass
+        assertEq(fundMe.i_owner(), msg.sender); // Now test pass
     }
 
     // What can we do to work with addresses outside our system?

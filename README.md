@@ -151,6 +151,50 @@ $ forge coverage --fork-url $SEPOLIA_RPC_URL
 
 ```
 
+Test again
+```shell
+$ forge test --fork-url $SEPOLIA_RPC_URL
+
+```
+Now testcase failed -> testOwnerIsMsgSender
+Because the deployer is the sender again
+
+```
+contract DeployFundMe is Script {
+    function run() external returns (FundMe) {
+        vm.startBroadcast();
+        FundMe fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        vm.stopBroadcast();
+        return fundMe;
+    }
+}
+```
+
+To avoid this error, change this source to that
+
+assertEq(fundMe.i_owner(), address(this)); To assertEq(fundMe.i_owner(), msg.sender);
+
+```
+  function testOwnerIsMsgSender() public {
+        console.log(fundMe.i_owner());
+        console.log(msg.sender);
+        //  assertEq(fundMe.i_owner(), msg.sender); // Fails because of (us -> FundMeTest -> FundMe)
+        assertEq(fundMe.i_owner(), address(this)); // Now test pass
+    }
+```
+
+```
+  function testOwnerIsMsgSender() public {
+        console.log(fundMe.i_owner());
+        console.log(msg.sender);
+        //  assertEq(fundMe.i_owner(), msg.sender); // Fails because of (us -> FundMeTest -> FundMe)
+        assertEq(fundMe.i_owner(), msg.sender); // Now test pass
+    }
+```
+
+
+
+
 
 
 
