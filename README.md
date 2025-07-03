@@ -103,4 +103,59 @@ $ forge test -vv
 
 ```
 
+## To Deploy
+
+Create DeployFundMe.s.sol inside script folder
+Then deploy
+
+```shell
+$ forge script script/DeployFundMe.s.sol
+
+```
+
+To Run only a particular test case, use m
+
+```shell
+$ forge test -m testPriceFeedVersionIsAccurate
+
+```
+    or 
+
+```shell
+$ forge test --match-test testPriceFeedVersionIsAccurate
+
+```
+Add SEPOLIA_RPC_URL to .env
+
+In terminal -> 
+
+```shell
+   $ source .env
+    $ echo $SEPOLIA_RPC_URL
+```
+
+Run on a fork-url
+
+```shell
+$ forge test --match-test testPriceFeedVersionIsAccurate -vvvvv --fork-url $SEPOLIA_RPC_URL
+
+```
+The anvil act like it's on sepolia now [When we test using fork-url, It's like running on the actual chain]
+We get 4 as the output. 
+Check on alchemy now.
+
+## Coverage
+
+```shell
+$ forge coverage --fork-url $SEPOLIA_RPC_URL
+
+```
+
+
+
+
+
+
+
+
 

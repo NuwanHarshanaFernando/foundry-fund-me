@@ -24,4 +24,17 @@ contract FundMeTest is Test {
         //  assertEq(fundMe.i_owner(), msg.sender); // Fails because of (us -> FundMeTest -> FundMe)
         assertEq(fundMe.i_owner(), address(this)); // Now test pass
     }
+
+    // What can we do to work with addresses outside our system?
+    // 4 types of testing:
+
+    // 1. Unit: Testing a single function
+    // 2. Integration: Testing multiple functions
+    // 3. Forked: Testing on a forked network
+    // 4. Staging: Testing on a live network (testnet or mainnet)
+
+    function testPriceFeedVersionIsAccurate() public {
+        uint256 version = fundMe.getVersion();
+        assertEq(version, 4); // Fails , Because the contract address is not exists because it run completey new anvil chain
+    }
 }
