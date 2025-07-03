@@ -95,3 +95,12 @@ In foundry.toml ->
 remappings = [
     "@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/",
 ]
+
+## To print the test output
+
+```shell
+$ forge test -vv
+
+```
+
+
