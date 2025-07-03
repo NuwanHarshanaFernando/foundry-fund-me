@@ -192,6 +192,20 @@ assertEq(fundMe.i_owner(), address(this)); To assertEq(fundMe.i_owner(), msg.sen
     }
 ```
 
+## Mock
+
+Create a file called HelperConfig.s.sol inside script folder
+
+- Create a new project called Mainnet in Alchemy
+- Set the RPC-URL in .env 
+
+Then test on fork-url mainnet
+
+```shell
+$ forge test --fork-url $MAINNET_RPC_URL
+
+```
+
 
 
 
