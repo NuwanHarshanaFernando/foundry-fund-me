@@ -227,6 +227,17 @@ https://getfoundry.sh/forge/tests/cheatcodes/
 
 https://getfoundry.sh/reference/cheatcodes/assertions
 
+## To get the gas cost for testing 
+
+```shell
+$ forge snapshot -m testWithdrawFromMultipleFunders
+
+```
+
+It creates a file called .gas-snapshot
+
+In anvil chain, it costs zero gas price, But in other networks there is a gas price.
+We have a cheatcode for gas price called 'txGasPrice'
 
 
 

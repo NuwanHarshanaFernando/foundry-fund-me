@@ -28,10 +28,10 @@ contract FundMeTest is Test {
     }
 
     function testOwnerIsMsgSender() public {
-        console.log(fundMe.i_owner());
+        console.log(fundMe.getOwner());
         console.log(msg.sender);
         //  assertEq(fundMe.i_owner(), msg.sender); // Fails because of (us -> FundMeTest -> FundMe)
-        assertEq(fundMe.i_owner(), msg.sender); // Now test pass
+        assertEq(fundMe.getOwner(), msg.sender); // Now test pass
     }
 
     // What can we do to work with addresses outside our system?
@@ -69,12 +69,71 @@ contract FundMeTest is Test {
         assertEq(funder, USER);
     }
 
-    function testOnlyOwnerCanWithdraw() public {
+    modifier funded() {
         vm.prank(USER);
         fundMe.fund{value: SEND_VALUE}();
+        _;
+    }
 
-        vm.expectRevert();
+    function testOnlyOwnerCanWithdraw() public funded {
+        // vm.prank(USER);
+        // fundMe.fund{value: SEND_VALUE}();
+
         vm.prank(USER);
+        vm.expectRevert();
         fundMe.withdraw();
+    }
+
+    function testWithdrawWithASingleFunder() public funded {
+        // Arrange
+        uint256 startingOwnerBalance = fundMe.getOwner().balance;
+        uint256 startingFundMeBalance = address(fundMe).balance;
+
+        // Act
+        vm.prank(fundMe.getOwner());
+        fundMe.withdraw();
+
+        // Assert
+        uint256 endingOwnerBalance = fundMe.getOwner().balance;
+        uint256 endingFundMeBalance = address(fundMe).balance;
+        assertEq(endingFundMeBalance, 0);
+        assertEq(
+            startingFundMeBalance + startingOwnerBalance,
+            endingOwnerBalance
+        );
+    }
+
+    function testWithdrawFromMultipleFunders() public funded {
+        // Arrange
+        uint160 numberOfFunders = 10;
+        uint160 startingFunderIndex = 1;
+        for (uint160 i = startingFunderIndex; i < numberOfFunders; i++) {
+            // vm.prank new address
+            // vm.deal new address
+            // address()
+            hoax(address(i), SEND_VALUE);
+            fundMe.fund{value: SEND_VALUE}();
+        }
+
+        uint256 startingOwnerBalance = fundMe.getOwner().balance;
+        uint256 startingFundMeBalance = address(fundMe).balance;
+
+        // Act
+
+        // vm.prank(fundMe.getOwner());
+        // fundMe.withdraw();
+
+        vm.startPrank(fundMe.getOwner());
+        fundMe.withdraw();
+        vm.stopPrank();
+
+        // These are identical
+
+        // Assert
+        assert(address(fundMe).balance == 0);
+        assert(
+            startingFundMeBalance + startingOwnerBalance ==
+                fundMe.getOwner().balance
+        );
     }
 }
