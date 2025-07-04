@@ -251,6 +251,70 @@ $ forge inspect FundMe storageLayout
 
 ```
 
+## Gas Optimization
+
+On FundMe.sol and FundMeTest.t.sol
+
+Then get a snapshot 
+
+```shell
+$ forge snapshot
+
+```
+
+Ran 10 tests for test/FundMeTest.t.sol:FundMeTest
+[PASS] testAddsFunderToArrayOfFunders() (gas: 103520)
+[PASS] testFundFailsWithoutEnoughETH() (gas: 25153)
+[PASS] testFundUpdatesFundedDataStructure() (gas: 103087)
+[PASS] testMinimumDollarIsFive() (gas: 8907)
+[PASS] testOnlyOwnerCanWithdraw() (gas: 104630)
+[PASS] testOwnerIsMsgSender() (gas: 16118)
+[PASS] testPriceFeedVersionIsAccurate() (gas: 14375)
+[PASS] testWithdrawFromMultipleFunders() (gas: 513031)
+[PASS] testWithdrawFromMultipleFundersCheaper() (gas: 512176)
+[PASS] testWithdrawWithASingleFunder() (gas: 93995)
+
+[PASS] testWithdrawFromMultipleFunders() (gas: 513031)
+[PASS] testWithdrawFromMultipleFundersCheaper() (gas: 512176)
+
+## Interactions
+
+Create a file called Interactions.s.sol inside script folder
+
+Foundry Devops
+https://github.com/ChainAccelOrg/foundry-devops
+
+Install foundry-devops
+
+```shell
+$ forge install ChainAccelOrg/foundry-devops --no-commit
+
+```
+
+```shell
+$ forge install Cyfrin/foundry-devops
+
+```
+
+To run the script
+
+```shell
+$ forge script script/Interactions.s.sol:FundFundMe
+
+```
+# Integration Testing
+
+After Integration Testing, Run on localnet and forknet
+
+```shell
+$ forge test
+
+```
+```shell
+$ forge test --fork-url $SEPOLIA_RPC_URL
+
+```
+
 
 
 
